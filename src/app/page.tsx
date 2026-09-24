@@ -1,14 +1,13 @@
-import Hero from '@/component/Hero';
-import Navbar from '@/component/Navbar';
-import React from 'react';
+import Hero from "@/component/Hero";
+import WorkoutLibrary from "@/component/workout/WorkoutLibrary";
 
-const page = () => {
+const Page = () => {
   return (
     <div>
-      <Navbar />
       <Hero />
-    </div>
+      <WorkoutLibrary />
+      </div>
   );
 };
 
-export default page;
+export default Page;
