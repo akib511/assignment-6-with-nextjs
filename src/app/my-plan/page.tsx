@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { Clock3, Flame, Star, X } from "lucide-react";
+import { toast } from "react-toastify";
 
 import { useFitLog } from "@/context/FitLogContext";
 import Image from "next/image";
@@ -61,8 +62,22 @@ const MyPlanPage = () => {
   const handleRemove = (id: number) => {
     if (activeTab === "plan") {
       removeFromPlan(id);
+      toast.success("Workout removed from today's plan");
     } else {
       removeFromSaved(id);
+      toast.success("Workout removed from saved");
+    }
+  };
+
+  const handleToggleCompleted = (id: number) => {
+    const isCompleted = completedIds.includes(id);
+
+    toggleCompleted(id);
+
+    if (isCompleted) {
+      toast.info("Workout marked as not done");
+    } else {
+      toast.success("Workout completed");
     }
   };
 
@@ -222,7 +237,7 @@ const MyPlanPage = () => {
                     {/* Mark as Done only for Today's Plan */}
                     {activeTab === "plan" && (
                       <button
-                        onClick={() => toggleCompleted(workout.id)}
+                        onClick={() => handleToggleCompleted(workout.id)}
                         className={`rounded-full px-4 py-2 text-[9px] font-bold uppercase transition ${
                           completedIds.includes(workout.id)
                             ? "bg-[#ccff00] text-black"

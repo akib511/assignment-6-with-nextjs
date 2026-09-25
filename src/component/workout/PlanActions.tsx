@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Bookmark, Dumbbell } from "lucide-react";
+import { toast } from "react-toastify";
 
 import { Workout } from "@/types/workout";
 import { useFitLog } from "@/context/FitLogContext";
@@ -13,27 +14,36 @@ interface PlanActionsProps {
 const PlanActions = ({ workout }: PlanActionsProps) => {
   const router = useRouter();
 
-  const { plan, addToPlan, saveWorkout } = useFitLog();
+  const { plan, saved, addToPlan, saveWorkout } = useFitLog();
 
-  // Add to Today's Plan button
+  // Add workout to Today's Plan
   const handleAddToPlan = () => {
-    console.log("Current plan:", plan);
-    console.log("Current workout:", workout.id);
-
     const alreadyAdded = plan.some((item) => item.id === workout.id);
 
-    console.log("Already added:", alreadyAdded);
-
     if (alreadyAdded) {
+      toast.warning("Already added to today's plan");
       return;
     }
 
     addToPlan(workout);
+
+    toast.success("Added to today's plan");
+
     router.push("/my-plan");
   };
 
+  // Save workout for later
   const handleSave = () => {
+    const alreadySaved = saved.some((item) => item.id === workout.id);
+
+    if (alreadySaved) {
+      toast.warning("Already saved");
+      return;
+    }
+
     saveWorkout(workout);
+
+    toast.success("Saved for later");
 
     router.push("/my-plan?tab=saved");
   };
