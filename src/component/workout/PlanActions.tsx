@@ -14,14 +14,26 @@ interface PlanActionsProps {
 const PlanActions = ({ workout }: PlanActionsProps) => {
   const router = useRouter();
 
-  const { plan, saved, addToPlan, saveWorkout } = useFitLog();
+  const { plan, saved, completedIds, addToPlan, saveWorkout } = useFitLog();
 
-  // Add workout to Today's Plan
   const handleAddToPlan = () => {
+    // Check if this workout is already in today's plan.
     const alreadyAdded = plan.some((item) => item.id === workout.id);
 
     if (alreadyAdded) {
       toast.warning("Already added to today's plan");
+      return;
+    }
+
+    const incompleteCount = plan.filter(
+      (item) => !completedIds.includes(item.id),
+    ).length;
+
+    // Maximum 5 incomplete workouts are allowed.
+    if (incompleteCount >= 5) {
+      toast.warning(
+        "Today's plan is full. Complete a workout to add a new one.",
+      );
       return;
     }
 
@@ -32,7 +44,6 @@ const PlanActions = ({ workout }: PlanActionsProps) => {
     router.push("/my-plan");
   };
 
-  // Save workout for later
   const handleSave = () => {
     const alreadySaved = saved.some((item) => item.id === workout.id);
 
@@ -50,7 +61,6 @@ const PlanActions = ({ workout }: PlanActionsProps) => {
 
   return (
     <div className="mt-7 flex flex-wrap gap-3">
-      {/* Add to Today's Plan */}
       <button
         onClick={handleAddToPlan}
         className="flex items-center gap-2 rounded-md bg-[#ccff00] px-5 py-2.5 text-[10px] font-black uppercase text-black transition hover:bg-white"
@@ -59,7 +69,6 @@ const PlanActions = ({ workout }: PlanActionsProps) => {
         Add to Today&apos;s Plan
       </button>
 
-      {/* Save for Later */}
       <button
         onClick={handleSave}
         className="flex items-center gap-2 rounded-md border border-white/20 px-5 py-2.5 text-[10px] font-black uppercase text-white transition hover:border-[#ccff00] hover:text-[#ccff00]"

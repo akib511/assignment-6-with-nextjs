@@ -103,9 +103,18 @@ export const FitLogProvider = ({ children }: FitLogProviderProps) => {
 
   const addToPlan = (workout: Workout) => {
     setPlan((currentPlan) => {
+      // Prevent adding the same workout twice.
       const alreadyExists = currentPlan.some((item) => item.id === workout.id);
 
-      if (alreadyExists) {
+      if (alreadyExists) return currentPlan;
+
+      // Count how many workouts are still incomplete.
+      const incompleteCount = currentPlan.filter(
+        (item) => !completedIds.includes(item.id),
+      ).length;
+
+      // Maximum 5 incomplete workouts can stay in today's plan.
+      if (incompleteCount >= 5) {
         return currentPlan;
       }
 
