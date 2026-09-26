@@ -16,7 +16,7 @@ export default function Loading() {
               <Skeleton className="mt-4 h-10 w-40 rounded-md" />
             </div>
             <div className="flex justify-center md:justify-end">
-              <Skeleton className="h-[400px] w-[400px] rounded-lg" />
+              <Skeleton className="h-100 w-100 rounded-lg" />
             </div>
           </div>
         </div>

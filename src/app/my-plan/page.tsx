@@ -202,7 +202,7 @@ const MyPlanPage = () => {
                       alt={workout.name}
                       width={500}
                       height={350}
-                      className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                      className="h-full w-full object-cover transition duration-500 group-hover:scale-105 rounded-2xl"
                     />
                   </div>
 
