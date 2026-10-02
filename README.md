@@ -16,7 +16,7 @@ The application features a modern dark gym-inspired interface with responsive la
 
 ## Screenshot
 
-> Add your project screenshot here.
+![FitLog Preview](./fitlog-preview.png)
 
 <!-- Replace the line above with your screenshot after uploading it to the repository. -->
 
